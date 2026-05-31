@@ -1,0 +1,25 @@
+{
+  "name": "land-buyer-app",
+  "version": "1.0.0",
+  "description": "Server for the Land Buyer Application",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.6",
+    "dotenv": "^10.0.0",
+    "express": "^4.22.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
