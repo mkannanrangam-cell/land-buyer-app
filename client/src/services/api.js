@@ -1,35 +1,54 @@
-// ...existing code...
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || '/api'
-});
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  baseURL: process.env.REACT_APP_API_URL || 'http://54.177.74.106:3000/api',
+  headers: {
+    'Content-Type': 'application/json'
   }
-  return config;
 });
 
-export const login = (credentials) => {
-  return api.post('/auth/login', credentials); // ✅ Correct endpoint
-};
+console.log('API URL =', api.defaults.baseURL);
 
-export const register = (credentials) => {
-  // credentials: { username, password, phone }
-  return api.post('/auth/register', credentials);
-};
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
 
-// Password reset via username + registered phone number (no SMS/OTP)
-export const verifyIdentity = (username, phone) => api.post('/auth/verify-identity', { username, phone });
-export const resetPassword = (resetToken, newPassword) => api.post('/auth/reset-password', { resetToken, newPassword });
-export const fetchBuyers = () => api.get('/buyers');
-export const getBuyerById = (id) => api.get(`/buyers/${id}`);
-export const addBuyer = (payload) => api.post('/buyers', payload);
-export const updateBuyer = (id, payload) => api.put(`/buyers/${id}`, payload);
-export const deleteBuyer = (id) => api.delete(`/buyers/${id}`);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Authentication
+export const login = (credentials) =>
+  api.post('/auth/login', credentials);
+
+export const register = (credentials) =>
+  api.post('/auth/register', credentials);
+
+export const verifyIdentity = (username, phone) =>
+  api.post('/auth/verify-identity', { username, phone });
+
+export const resetPassword = (resetToken, newPassword) =>
+  api.post('/auth/reset-password', { resetToken, newPassword });
+
+// Buyers
+export const fetchBuyers = () =>
+  api.get('/buyers');
+
+export const getBuyerById = (id) =>
+  api.get(`/buyers/${id}`);
+
+export const addBuyer = (payload) =>
+  api.post('/buyers', payload);
+
+export const updateBuyer = (id, payload) =>
+  api.put(`/buyers/${id}`, payload);
+
+export const deleteBuyer = (id) =>
+  api.delete(`/buyers/${id}`);
 
 export default api;
-// ...existing code...
