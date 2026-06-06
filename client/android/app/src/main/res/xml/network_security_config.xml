@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Allows plain-HTTP (cleartext) traffic ONLY to the AWS backend IP below.
+  Everything else stays HTTPS-only, which keeps Google Play happy and limits
+  the insecure exception to a single host.
+
+  When you move the backend to HTTPS (recommended), delete the <domain-config>
+  block (or the whole file + the manifest reference) and set
+  REACT_APP_API_URL=https://your-domain in client/.env, then rebuild.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">52.8.193.15</domain>
+    </domain-config>
+</network-security-config>
